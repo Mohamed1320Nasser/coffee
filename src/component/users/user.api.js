@@ -1,4 +1,4 @@
-const { SignUp, Signin } = require("./user.auth");
+const { SignUp, Signin, verifyEmail } = require("./user.auth");
 const {
   creatUser,
   getUsers,
@@ -11,6 +11,7 @@ const {
 const router = require("express").Router();
 
 router.route("/").post(creatUser).get(getUsers);
+router.get("/verfy-email", verifyEmail);
 router.route("/:id").get(getUser).put(updUser).delete(delUser);
 router.patch("/changePassword/:id", ChangePass);
 router.post("/signUp", SignUp);

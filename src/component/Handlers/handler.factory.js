@@ -37,7 +37,7 @@ exports.getAll = (Model) =>
       .sort()
       .search()
       .fields();
-    const Product = await apiFeatures.mongooseQuery;
+    const Product = await apiFeatures.mongooseQuery.populate('category brand machine');
     !Product && next(new AppError("Product not found", 404));
     Product &&
       res.status(200).json({ page: apiFeatures.page, result: Product });

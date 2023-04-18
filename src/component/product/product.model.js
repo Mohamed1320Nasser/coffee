@@ -63,7 +63,7 @@ const schema = Schema(
     },
     machine:{
       type: Types.ObjectId,
-      ref: "machine",
+      ref: "Machinee",
     }
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }

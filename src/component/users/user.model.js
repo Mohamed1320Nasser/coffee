@@ -24,12 +24,25 @@ const schema = Schema(
       minlength: [6, "less than chracter length must be 6"],
     },
     passwordChangeAt: Date,
-    profileImage: String,
+    image: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/dw0cormzj/image/upload/v1679430518/Youth%20Welfare/Student/profile_dteqac.jpg",
+    },
+    cloudinary_id: {
+      type: String,
+      default: "default",
+    },
     role: {
       type: String,
       enum: ["user", "admin"],
       default: "user",
     },
+    Isverified: {
+      type: Boolean,
+      default: false,
+    },
+    emailToken: String,
     isActive: {
       type: Boolean,
       default: true,
