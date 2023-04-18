@@ -1,4 +1,5 @@
-const { SignUp, Signin, verifyEmail } = require("./user.auth");
+const { SignUp, Signin, verifyEmail, protectedRoutes } = require("./user.auth");
+const { getProfile, updateProfile } = require("./user.profile");
 const {
   creatUser,
   getUsers,
@@ -16,5 +17,9 @@ router.route("/:id").get(getUser).put(updUser).delete(delUser);
 router.patch("/changePassword/:id", ChangePass);
 router.post("/signUp", SignUp);
 router.post("/signin", Signin);
+router
+  .get("/myProfile", protectedRoutes, getProfile)
+  .put("/updateProfile", protectedRoutes, updateProfile)
+  .put("/changePassword", protectedRoutes, ChangePass);
 
 module.exports = router;

@@ -4,7 +4,6 @@ const { catchAsyncError } = require("../../utils/catchAsyncErr");
 const { deleteFromCloudinary } = require("../../utils/cludinary");
 const UserModel = require("./user.model");
 exports.getProfile = catchAsyncError(async (req, res, next) => {
-
     const User = await UserModel.findById(req.User._id).select('name email phone image')
   
     if (!User) return next(new AppError("User not found", 404));
@@ -27,7 +26,6 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
   }
 });
 module.exports.ChangePass = catchAsyncError(async (req, res,next) => {
-
   const { oldPassword, newPassword } = req.body;
   let match = await bcrypt.compare(oldPassword, req.user.password);
   if (match) {
