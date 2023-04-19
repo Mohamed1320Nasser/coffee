@@ -7,6 +7,8 @@ const express = require("express");
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+const cors = require("cors");
+app.use(cors());
 require("dotenv").config({ path: "./config/.env" });
 const { dbConnection } = require("./src/dataBase/db-Connection");
 const port = process.env.PORT || 4000;

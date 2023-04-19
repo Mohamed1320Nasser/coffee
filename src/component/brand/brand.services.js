@@ -9,10 +9,11 @@ module.exports.creatBrand = facrory.createOne(BrandModel,"brand");
 module.exports.getBrands = facrory.getAll(BrandModel);
 
 // to get specific Brand
-module.exports.getBrand = facrory.getOne(BrandModel);
+module.exports.getBrand = facrory.getOne(BrandModel,'brand');
 
 // to delete an Brand
 module.exports.delBrand = facrory.deleteOn(BrandModel);
 
 // to update Brand name
 module.exports.updBrand = facrory.updateOne(BrandModel,"brand")
+

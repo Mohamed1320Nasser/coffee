@@ -8,7 +8,8 @@ const {
 } = require("./Machines.services");
 
 const router = require("express").Router();
-
+const products =require("../product/product.api")
+router.use("/:machienId/products",products)
 router
   .route("/")
   .post(uploadSingleImage("image", "machines"), creatMachines)

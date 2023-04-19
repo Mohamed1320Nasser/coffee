@@ -6,7 +6,7 @@ const {
   updProduct,
   delProduct,
 } = require("./product.services");
-const router = require("express").Router();
+const router = require("express").Router({mergeParams:true});
 
 router
   .route("/")

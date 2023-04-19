@@ -31,7 +31,11 @@ exports.deleteOn = (Model) => {
 
 exports.getAll = (Model) =>
   catchAsyncError(async (req, res, next) => {
-    let apiFeatures = new ApiFeatures(Model.find(), req.query)
+    let filter = {};
+    if(req.params.categoryId) filter = {category: req.params.categoryId};
+    if(req.params.machienId) filter = {machien: req.params.machienId};
+    if(req.params.brandId) filter = {brand: req.params.brandId};
+    let apiFeatures = new ApiFeatures(Model.find(filter), req.query)
       .paginat()
       .filter()
       .sort()
@@ -83,3 +87,20 @@ exports.updateOne = (Model, fieldName) =>
     Document.save();
     res.status(200).json({ data: Document });
   });
+  // exports.getSomeProduct=(Model,name)=>{
+  //   catchAsyncError(async(req,res,next)=>{
+  //     exports.getAll = (Model) =>
+  // catchAsyncError(async (req, res, next) => {
+  //   let apiFeatures = new ApiFeatures(Model.find({:id}), req.query)
+  //     .paginat()
+  //     .filter()
+  //     .sort()
+  //     .search()
+  //     .fields();
+  //   const Product = await apiFeatures.mongooseQuery
+  //   !Product && next(new AppError("Product not found", 404));
+  //   Product &&
+  //     res.status(200).json({ page: apiFeatures.page, result: Product });
+  // });
+  //   });
+  // }
