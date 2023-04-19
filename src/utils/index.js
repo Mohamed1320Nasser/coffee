@@ -1,6 +1,16 @@
+const { dbConnection } = require("../dataBase/db-Connection");
+const AppError = require("./AppError");
 const globalMiddelwearErr = require("./globalMiddelwearErr");
 
 exports.allRequires = (app) => {
+
+  const morgan = require("morgan");
+  // determine if devolopment or production is enabled
+if (process.env.MODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
+
   app.use("/api/v1/categories", require("../component/category/category.api"));
   app.use("/api/v1/brands", require("../component/brand/brand.api"));
   app.use("/api/v1/products", require("../component/product/product.api"));
@@ -12,6 +22,17 @@ exports.allRequires = (app) => {
   app.use("/api/v1/coupons", require("../component/coupon/coupon.api"));
   app.use("/api/v1/carts", require("../component/cart/cart.api"));
   app.use("/api/v1/orders", require("../component/order/order.routes"));
+
+  //requires
+app.all("*", (req, res, next) => {
+  next(new AppError(`cannot get this route ${req.originalUrl} in her `, 404));
+});
+
+// Middlewares
+app.use(globalMiddelwearErr);
+
+// Connect with db
+dbConnection();
 
 
   // app.use(globalMiddelwearErr);

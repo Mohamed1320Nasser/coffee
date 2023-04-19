@@ -4,37 +4,19 @@ process.on("uncaughtException", (err) => {
 const bodyParser = require("body-parser");
 const express = require("express");
 
+// express app
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const cors = require("cors");
 app.use(cors());
+
+// module dotenv to save the improtant data
 require("dotenv").config({ path: "./config/.env" });
-const { dbConnection } = require("./src/dataBase/db-Connection");
 const port = process.env.PORT || 4000;
-const morgan = require("morgan");
-const AppError = require("./src/utils/AppError");
-const GlobalMiddelwearErr = require("./src/utils/globalMiddelwearErr");
 const { allRequires } = require("./src/utils");
 
-
-// Connect with db
-dbConnection();
-
-// determine if devolopment or production is enabled
-if (process.env.MODE_ENV === "development") {
-  app.use(morgan("dev"));
-}
-// express app
-
 allRequires(app);
-// Middlewares
-
-//requires
-app.all("*", (req, res, next) => {
-  next(new AppError(`cannot get this route ${req.originalUrl} in her `, 404));
-});
-app.use(GlobalMiddelwearErr);
 
 // Handle rejection outside express
 process.on("unhandledRejection", (err) => {
