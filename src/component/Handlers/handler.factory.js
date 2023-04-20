@@ -35,7 +35,6 @@ exports.getAll = (Model) =>
     if(req.params.categoryId) filter = {category: req.params.categoryId};
     if(req.params.machineId) filter = {machine: req.params.machineId};
     if(req.params.brandId) filter = {brand: req.params.brandId};
-    console.log(req.params.categoryId);
     let apiFeatures = new ApiFeatures(Model.find(filter), req.query)
       .paginat()
       .filter()

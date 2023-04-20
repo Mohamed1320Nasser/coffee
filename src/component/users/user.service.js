@@ -27,11 +27,4 @@ module.exports.updUser = catchAsyncError(async (req, res, next) => {
   User && res.status(200).json(User);
 });
 
-//change password
-module.exports.ChangePass = catchAsyncError(async (req, res, next) => {
-  req.body.passwordChangeAt = Date.now();
-  const { id } = req.params;
-  const User = await UserModel.findByIdAndUpdate(id, req.body, { new: true });
-  !User && next(new AppError("User not found", 404));
-  User && res.status(200).json(User);
-});
+

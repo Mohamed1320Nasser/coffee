@@ -1,25 +1,39 @@
-const { SignUp, Signin, verifyEmail, protectedRoutes } = require("./user.auth");
-const { getProfile, updateProfile } = require("./user.profile");
+const {
+  SignUp,
+  Signin,
+  verifyEmail,
+  protectedRoutes,
+  allowedTo,
+  Signout,
+} = require("./user.auth");
+const { getProfile, updateProfile, ChangePass } = require("./user.profile");
 const {
   creatUser,
   getUsers,
   getUser,
   updUser,
   delUser,
-  ChangePass,
 } = require("./user.service");
 
 const router = require("express").Router();
 
-router.route("/").post(creatUser).get(getUsers);
+router
+  .route("/")
+  .post(protectedRoutes, allowedTo("admin"), creatUser)
+  .get(protectedRoutes, allowedTo("admin"), getUsers);
 router.get("/verfy-email", verifyEmail);
-router.route("/:id").get(getUser).put(updUser).delete(delUser);
-router.patch("/changePassword/:id", ChangePass);
+router
+  .route("/:id")
+  .get(protectedRoutes, allowedTo("admin"), getUser)
+  .put(protectedRoutes, allowedTo("admin"), updUser)
+  .delete(delUser, protectedRoutes, allowedTo("admin"));
+
 router.post("/signUp", SignUp);
 router.post("/signin", Signin);
+router.post("/Signout", Signout);
 router
   .get("/myProfile", protectedRoutes, getProfile)
   .put("/updateProfile", protectedRoutes, updateProfile)
-  .put("/changePassword", protectedRoutes, ChangePass);
+  .patch("/changePassword", protectedRoutes, ChangePass);
 
 module.exports = router;

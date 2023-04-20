@@ -46,6 +46,13 @@ module.exports.Signin = catchAsyncError(async (req, res, next) => {
   );
   res.status(200).json({ token });
 });
+exports.Signout = catchAsyncError(async (req, res, next) => {
+  res.clearCookie("token");
+  const expiredToken = jwt.sign({}, process.env.secrit_key, {
+    expiresIn: "10",
+  });
+  res.status(200).json({ message: "logged out",status:true  });
+});
 
 //authentication 
 exports.protectedRoutes = catchAsyncError(async (req, res, next) => {
