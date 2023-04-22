@@ -11,9 +11,9 @@ const router = require("express").Router();
 router.use(protectedRoutes, allowedTo("user"));
 router
   .route("/")
-  .post(addProductToCart)
-  .delete(removeProductFromeCart)
-  .put(updateQuantity)
+  .post(protectedRoutes,addProductToCart)
+  .delete(protectedRoutes,removeProductFromeCart)
+  .put(protectedRoutes,updateQuantity)
   .get(protectedRoutes,getUserCart);
   router.post("/applyCoupon",applyCoupon)
 module.exports = router;

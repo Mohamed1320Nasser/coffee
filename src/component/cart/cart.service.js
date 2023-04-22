@@ -20,8 +20,7 @@ const calcTotalCartPrice = (Cart) => {
 };
 // add product to cart
 exports.addProductToCart = catchAsyncError(async (req, res, next) => {
-  let { price } = await productModel.findById(req.body.product).select("price");
-  console.log(price);
+  let { price } = await productModel.findById(req.body.product);
   req.body.price = price;
   let Cart = await CartModel.findOne({ user: req.user._id }); //.populate({ path: "cartItems.product", select: "price",});
   if (!Cart) {
@@ -76,7 +75,7 @@ exports.updateQuantity = catchAsyncError(async (req, res, next) => {
   res.status(200).json(Cart);
 });
 
-//applying coupon 
+//applying coupon
 exports.applyCoupon = catchAsyncError(async (req, res, next) => {
   let coupon = await couponModel.findOne({
     code: req.body.code,
@@ -96,7 +95,10 @@ exports.applyCoupon = catchAsyncError(async (req, res, next) => {
 
 // get cart owner
 exports.getUserCart = catchAsyncError(async (req, res, next) => {
-  const Cart = await CartModel.findOne({ user: req.user._id });
+  const Cart = await CartModel.findOne({ user: req.user._id }).populate({
+    path: "cartItems.product",
+    select: "name image -_id ",
+  });
   res.status(200).json({
     status: "success",
     numOfCartItems: Cart.cartItems.length,
