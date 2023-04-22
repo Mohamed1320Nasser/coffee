@@ -97,7 +97,7 @@ exports.applyCoupon = catchAsyncError(async (req, res, next) => {
 exports.getUserCart = catchAsyncError(async (req, res, next) => {
   const Cart = await CartModel.findOne({ user: req.user._id }).populate({
     path: "cartItems.product",
-    select: "name image -_id ",
+    select: "name image ratingCount -_id ",
   });
   res.status(200).json({
     status: "success",
