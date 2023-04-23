@@ -50,7 +50,7 @@ exports.addProductToCart = catchAsyncError(async (req, res, next) => {
 exports.removeProductFromeCart = catchAsyncError(async (req, res, next) => {
   const Cart = await CartModel.findOneAndUpdate(
     { user: req.user._id },
-    { $pull: { cartItems: { _id: req.body.itemId } } },
+    { $pull: { cartItems: { product: req.body.product } } },
     { new: true }
   );
   calcTotalCartPrice(Cart);
