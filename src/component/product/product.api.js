@@ -1,4 +1,6 @@
 const { uploadSingleImage } = require("../../utils/uploadFile");
+const { validation } = require("../../utils/validation");
+const { productValidation } = require("./product.validate");
 const { protectedRoutes, allowedTo } = require("../users/user.auth");
 const {
   creatProduct,
@@ -15,6 +17,7 @@ router
     protectedRoutes,
     allowedTo("admin"),
     uploadSingleImage("image", "product"),
+    validation(productValidation),
     creatProduct
   )
   .get(getProducts);

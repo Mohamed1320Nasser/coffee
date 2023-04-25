@@ -7,8 +7,10 @@ const {
 } = require("./category.services");
 const { uploadSingleImage } = require("../../utils/uploadFile");
 const { protectedRoutes, allowedTo } = require("../users/user.auth");
-const router = require("express").Router();
 const products = require("../product/product.api");
+const { validation } = require("../../utils/validation");
+const validators=require('./category.validat')
+const router = require("express").Router();
 router.use("/:categoryId/products", products);
 router
   .route("/")
@@ -16,6 +18,7 @@ router
     protectedRoutes,
     allowedTo("admin"),
     uploadSingleImage("image", "category"),
+    validation(validators.category),
     creatCategory
   )
   .get(getCategories);
@@ -28,5 +31,5 @@ router
     uploadSingleImage("image", "category"),
     updCategory
   )
-  .delete(protectedRoutes, allowedTo("admin"), deleleCategory);
+  .delete( deleleCategory);
 module.exports = router;

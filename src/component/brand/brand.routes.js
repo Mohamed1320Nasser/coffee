@@ -10,6 +10,8 @@ const {
 const router = require("express").Router();
 const products = require("../product/product.api");
 const { protectedRoutes, allowedTo } = require("../users/user.auth");
+const { validation } = require("../../utils/validation");
+const { brandValidation } = require("./brand.validate");
 router.use("/:brandId/products", products);
 router
   .route("/")
@@ -17,6 +19,7 @@ router
     protectedRoutes,
     allowedTo("admin"),
     uploadSingleImage("image", "brand"),
+    validation(brandValidation),
     creatBrand
   )
   .get(getBrands);

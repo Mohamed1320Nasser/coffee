@@ -50,7 +50,7 @@ exports.addProductToCart = catchAsyncError(async (req, res, next) => {
 exports.removeProductFromeCart = catchAsyncError(async (req, res, next) => {
   const Cart = await CartModel.findOneAndUpdate(
     { user: req.user._id },
-    { $pull: { cartItems: { product: req.body.product } } },
+    { $pull: { cartItems: { _id: req.body.item } } },
     { new: true }
   );
   calcTotalCartPrice(Cart);
@@ -97,7 +97,7 @@ exports.applyCoupon = catchAsyncError(async (req, res, next) => {
 exports.getUserCart = catchAsyncError(async (req, res, next) => {
   const Cart = await CartModel.findOne({ user: req.user._id }).populate({
     path: "cartItems.product",
-    select: "name image ratingCount -_id ",
+    select: "name image ratingCount ",
   });
   res.status(200).json({
     status: "success",

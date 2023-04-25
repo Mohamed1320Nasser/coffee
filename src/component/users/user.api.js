@@ -1,3 +1,4 @@
+const { validation } = require("../../utils/validation");
 const {
   SignUp,
   Signin,
@@ -14,12 +15,13 @@ const {
   updUser,
   delUser,
 } = require("./user.service");
+const { userSchema, loginSchema, changePassSchema } = require("./user.validate");
 
 const router = require("express").Router();
 
 router
   .route("/")
-  .post(protectedRoutes, allowedTo("admin"), creatUser)
+  .post(protectedRoutes, allowedTo("admin"), validation(userSchema), creatUser)
   .get(protectedRoutes, allowedTo("admin"), getUsers);
 router.get("/verfy-email", verifyEmail);
 router
@@ -28,12 +30,12 @@ router
   .put(protectedRoutes, allowedTo("admin"), updUser)
   .delete(delUser, protectedRoutes, allowedTo("admin"));
 
-router.post("/signUp", SignUp);
-router.post("/signin", Signin);
+router.post("/signUp",validation(userSchema), SignUp);
+router.post("/signin",validation(loginSchema), Signin);
 router.post("/Signout", Signout);
 router
   .get("/myProfile", protectedRoutes, getProfile)
   .put("/updateProfile", protectedRoutes, updateProfile)
-  .patch("/changePassword", protectedRoutes, ChangePass);
+  .patch("/changePassword", protectedRoutes ,validation(changePassSchema), ChangePass);
 
 module.exports = router;
