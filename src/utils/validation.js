@@ -5,7 +5,6 @@ exports.validation = (Schema) => {
     return (req, res, next) => {
         try {
             const validationArr = []
-            console.log(req.body);
             dataMethod.forEach(key => {
                 if (Schema[key]) {
                     const validationResult = Schema[key].validate(req[key], { abortEarly: false })

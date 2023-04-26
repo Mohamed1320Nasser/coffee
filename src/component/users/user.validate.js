@@ -3,7 +3,7 @@ exports.userSchema = { body: joi
 .object()
 .required()
 .keys({
-  name: joi.string().required().min(3).max(10).messages({
+  name: joi.string().required().min(3).max(50).messages({
     "any.required": "userName field is required",
     "any.empty": "empty userName is not acceptable",
   }),
@@ -11,7 +11,7 @@ exports.userSchema = { body: joi
     "any.required": "user email field is required",
     "any.empty": "empty user email is not acceptable",
   }),
-  password: joi.string().required().regex(RegExp("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$")).messages({
+  password: joi.string().required().regex(RegExp(/^(?=.*[a-zA-Z])(?=.*\d).{8,}$/)).messages({
     "any.required": "user password field is required",
     "any.empty": "empty user password is not acceptable",
   }),
@@ -30,7 +30,7 @@ exports.loginSchema = { body: joi
       "any.required": "user email field is required",
       "any.empty": "empty user name is not acceptable",
     }),
-    password: joi.string().required().regex(RegExp("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$")).messages({
+    password: joi.string().required().regex(RegExp(/^(?=.*[a-zA-Z])(?=.*\d).{8,}$/)).messages({
       "any.required": "user password field is required",
       "any.empty": "empty user name is not acceptable",
     }),
