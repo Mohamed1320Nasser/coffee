@@ -57,7 +57,9 @@ exports.Signout = catchAsyncError(async (req, res, next) => {
 //authentication 
 exports.protectedRoutes = catchAsyncError(async (req, res, next) => {
   const { token } = req.headers;
+  console.log("befor");
   if (!token) return next(new AppError("token inprovided", 401));
+  console.log("after");
   let decoded = jwt.verify(token, process.env.secrit_key);
   const user = await UserModel.findById(decoded.userId);
   if (!user) return next(new AppError("User not found", 401));
