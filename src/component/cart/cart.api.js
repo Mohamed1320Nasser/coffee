@@ -8,7 +8,6 @@ const {
 } = require("./cart.service");
 
 const router = require("express").Router();
-router.use(protectedRoutes, allowedTo("user"));
 router
   .route("/")
   .post(protectedRoutes,addProductToCart)

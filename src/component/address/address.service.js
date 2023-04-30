@@ -8,7 +8,7 @@ module.exports.addToAddress = catchAsyncError(async (req, res, next) => {
     { $addToSet: { addresses: req.body } },
     { new: true }
   );
-  console.log(addresses);
+
   !addresses && next(new AppError("address not found", 404));
   addresses && res.status(200).json(addresses);
 });
