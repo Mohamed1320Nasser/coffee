@@ -48,19 +48,18 @@ exports.addProductToCart = catchAsyncError(async (req, res, next) => {
 
 //remov product from cart
 exports.removeProductFromeCart = catchAsyncError(async (req, res, next) => {
-  console.log("text 1");
-  const Cart = await CartModel.findOneAndUpdate(
-    { user: req.user._id },
-    { $pull: { cartItems: { _id: req.body.item } } },
-    { new: true }
-  );
-  console.log("text 2");
-  calcTotalCartPrice(Cart);
-  await Cart.save();
-  !Cart && next(new AppError("cartItems not found", 404));
-  Cart && res.status(200).json(Cart);
-});
+  res.json({item:req.body.item,token:req.headers.token})
+  // const Cart = await CartModel.findOneAndUpdate(
+  //   { user: req.user._id },
+  //   { $pull: { cartItems: { _id: req.body.item } } },
+  //   { new: true }
+  // );
+  // calcTotalCartPrice(Cart);
+  // await Cart.save();
+  // !Cart && next(new AppError("cartItems not found", 404));
+  // Cart && res.status(200).json(Cart);
 
+});
 // update quantity of cart
 exports.updateQuantity = catchAsyncError(async (req, res, next) => {
   console.log("text 2");
