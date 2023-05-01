@@ -4,8 +4,6 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const { catchAsyncError } = require("../../utils/catchAsyncErr");
 const AppError = require("../../utils/AppError");
-const facrory = require("../Handlers/handler.factory");
-const userModel = require("./user.model");
 const { sendEmail } = require("../emails/verification.email");
 
 //sign Up
@@ -27,9 +25,9 @@ exports.verifyEmail = catchAsyncError(async (req, res, next) => {
       emailToken: null,
       Isverified: true,
     });
-    res.status(200).json({message:"email verified",status:true});
+    res.status(200).json({ message: "email verified", status: true });
   } else {
-    res.status(404).json({message:"user not found",status:false});
+    res.status(404).json({ message: "user not found", status: false });
   }
 });
 
@@ -38,7 +36,7 @@ module.exports.Signin = catchAsyncError(async (req, res, next) => {
   const User = await UserModel.findOne({ email: req.body.email });
   if (!User || !(await bcrypt.compare(req.body.password, User.password)))
     return next(new AppError("incorrect email or password", 401));
-    if (User.Isverified == false)
+  if (User.Isverified == false)
     return next(new AppError("email is not verified", 401));
   const token = jwt.sign(
     { userId: User._id, name: User.name },
@@ -51,15 +49,13 @@ exports.Signout = catchAsyncError(async (req, res, next) => {
   const expiredToken = jwt.sign({}, process.env.secrit_key, {
     expiresIn: "10",
   });
-  res.status(200).json({ message: "logged out",status:true  });
+  res.status(200).json({ message: "logged out", status: true });
 });
 
 //authentication 
 exports.protectedRoutes = catchAsyncError(async (req, res, next) => {
   const { token } = req.headers;
-  console.log("befor");
   if (!token) return next(new AppError("token inprovided", 401));
-  console.log("after");
   let decoded = jwt.verify(token, process.env.secrit_key);
   const user = await UserModel.findById(decoded.userId);
   if (!user) return next(new AppError("User not found", 401));
@@ -72,7 +68,7 @@ exports.protectedRoutes = catchAsyncError(async (req, res, next) => {
 
   next();
 });
- //authrization {detrmind if user or admin}
+//authrization {detrmind if user or admin}
 exports.allowedTo = (...roles) => {
   return catchAsyncError(async (req, res, next) => {
     if (!roles.includes(req.user.role))

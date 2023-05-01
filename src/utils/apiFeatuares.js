@@ -6,10 +6,11 @@ class ApiFeatures {
   paginat() {
     let page = this.querySting.page * 1 || 1;
     if (page < 1) page = 1;
-    let limit = 20;
+    let limit = 6;
     let skip = (page - 1) * limit;
     this.mongooseQuery.skip(skip).limit(limit);
     this.page = page;
+    this.limit = limit;
     return this;
   }
 
