@@ -24,6 +24,7 @@ router
   .post(protectedRoutes, allowedTo("admin"), validation(userSchema), creatUser)
   .get(protectedRoutes, allowedTo("admin"), getUsers);
 router.get("/verfy-email", verifyEmail);
+router.get("/myProfile", protectedRoutes, getProfile)
 router
   .route("/:id")
   .get(protectedRoutes, allowedTo("admin"), getUser)
@@ -34,7 +35,7 @@ router.post("/signUp",validation(userSchema), SignUp);
 router.post("/signin",validation(loginSchema), Signin);
 router.post("/Signout", Signout);
 router
-  .get("/myProfile", protectedRoutes, getProfile)
+  // .get("/myProfile", protectedRoutes, getProfile)
   .put("/updateProfile", protectedRoutes, updateProfile)
   .patch("/changePassword", protectedRoutes ,validation(changePassSchema), ChangePass);
 
