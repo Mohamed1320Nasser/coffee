@@ -23,9 +23,9 @@ const schema = Schema(
     },
     shippingAddress: {
       details: String,
+      street: String,
       phone: String,
       city: String,
-      postalCode: String,
     },
     shippingPrice: {
       type: Number,

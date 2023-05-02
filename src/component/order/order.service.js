@@ -34,7 +34,6 @@ exports.createCashOrder = catchAsyncError(async (req, res, next) => {
     shippingAddress: req.body.shippingAddress,
     totalOrderPrice,
   });
-
   // 4) After creating order, decrement product quantity, increment product sold
   if (order) {
     const bulkOption = cart.cartItems.map((item) => ({

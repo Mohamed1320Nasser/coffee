@@ -56,9 +56,9 @@ const schema = Schema(
     addresses: [
       {
         _id: { type: Types.ObjectId },
-        name: String,
-        street: String,
+    
         details: String,
+        street: String,
         phone: String,
         city: String,
       },
