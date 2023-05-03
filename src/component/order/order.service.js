@@ -14,7 +14,7 @@ exports.createCashOrder = catchAsyncError(async (req, res, next) => {
   const shippingPrice = 0;
 
   // 1) Get cart depend on cartId
-  const cart = await Cart.findById(req.params.cartId);
+  const cart = await Cart.findOne({user: req.user._id });
   if (!cart) {
     return next(
       new AppError(`There is no such cart with id ${req.params.cartId}`, 404)
@@ -78,7 +78,6 @@ exports.updateOrderToPaid = catchAsyncError(async (req, res, next) => {
       )
     );
   }
-
   // update order to paid
   order.isPaid = true;
   order.paidAt = Date.now();

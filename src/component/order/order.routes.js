@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.use(protectedRoutes);
 
-router.route("/:cartId").post(allowedTo("user"), createCashOrder);
+router.route("/").post(allowedTo("user"), createCashOrder);
 router.get(
   "/",
   allowedTo("user", "admin"),

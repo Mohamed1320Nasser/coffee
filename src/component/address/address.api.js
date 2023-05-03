@@ -6,7 +6,7 @@ const {
 } = require("./address.service");
 
 const router = require("express").Router();
-router.use(protectedRoutes, allowedTo("user"));
+router.use(protectedRoutes);
 router
   .route("/")
   .patch(addToAddress)
