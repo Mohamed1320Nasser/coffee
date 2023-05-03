@@ -15,9 +15,10 @@ exports.createCashOrder = catchAsyncError(async (req, res, next) => {
 
   // 1) Get cart depend on cartId
   const cart = await Cart.findOne({user: req.user._id });
+  console.log(cart);
   if (!cart) {
     return next(
-      new AppError(`There is no such cart with id ${req.params.cartId}`, 404)
+      new AppError(`There is no such cart with this user`, 404)
     );
   }
   // 2) Get order price depend on cart price "Check if coupon apply"
@@ -45,7 +46,7 @@ exports.createCashOrder = catchAsyncError(async (req, res, next) => {
     await productModel.bulkWrite(bulkOption, {});
 
     // 5) Clear cart depend on cartId
-    await Cart.findByIdAndDelete(req.params.cartId);
+    await Cart.findOneAndDelete({user: req.user._id });
   }
 
   res.status(201).json({ status: "success", data: order });
