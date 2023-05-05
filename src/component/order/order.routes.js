@@ -8,19 +8,28 @@ const {
   updateOrderToPaid,
   updateOrderToDelivered,
   findSpecificOrder,
+  checkoutSession,
+  webhookCheckout,
 } = require("./order.service");
 
 const router = express.Router();
 
 router.use(protectedRoutes);
 
+
 router.route("/").post(allowedTo("user"), createCashOrder);
+router.get(
+  "/checkout-session",
+  allowedTo('user'),
+  checkoutSession
+);
 router.get(
   "/",
   allowedTo("user", "admin"),
   filterOrderForLoggedUser,
   findAllOrders
 );
+
 router.get("/:id", findSpecificOrder);
 
 router.put("/:id/pay", allowedTo("admin"), updateOrderToPaid);
