@@ -14,7 +14,7 @@ const {
 
 const router = express.Router();
 
-// router.use(protectedRoutes);
+router.use(protectedRoutes);
 
 
 router.route("/").post(allowedTo("user"), createCashOrder);
