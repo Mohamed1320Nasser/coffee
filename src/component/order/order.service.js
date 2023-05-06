@@ -180,7 +180,7 @@ const createCardOrder = async (session) => {
     paidAt: Date.now(),
     paymentMethodType: 'card',
   });
-
+  console.log("One",order );
   // 4) After creating order, decrement product quantity, increment product sold
   if (order) {
     const bulkOption = cart.cartItems.map((item) => ({
@@ -191,11 +191,10 @@ const createCardOrder = async (session) => {
     }));
     await Product.bulkWrite(bulkOption, {});
 
-
     // 5) Clear cart depend on cartId
     await Cart.findByIdAndDelete(cartId);
-    return order
   }
+  console.log("Two",order);
 };
 
 // @desc    This webhook will run when stripe payment success paid
@@ -219,6 +218,6 @@ exports.webhookCheckout = catchAsyncError(async (req, res, next) => {
   if (event.type === 'checkout.session.completed') {
     //  Create order
     createCardOrder(event.data.object);
-    res.status(200).json({ received: true ,order:createCardOrder(event.data.object)});
+    res.status(200).json({ received: true });
   }else return res.status(200).json({ received: false ,message:"rejected order"});
 });
