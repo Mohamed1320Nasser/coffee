@@ -6,7 +6,7 @@ const { catchAsyncError } = require("../../utils/catchAsyncErr");
 const AppError = require("../../utils/AppError");
 const userModel = require("../users/user.model");
 const cartModel = require("../cart/cart.model");
-const stripe = require('stripe')(process.env.STRIPE_KEY);
+const Stripe = require('stripe');
 // @desc    create cash order
 // @route   POST /api/v1/orders/cartId
 // @access  Protected/User
@@ -117,7 +117,6 @@ exports.updateOrderToDelivered = catchAsyncError(async (req, res, next) => {
 // @route   GET /api/v1/orders/checkout-session/cartId
 // @access  Protected/User
 exports.checkoutSession = catchAsyncError(async (req, res, next) => {
-  console.log("test");
   // app settings
   const taxPrice = 0;
   const shippingPrice = 0;
@@ -129,7 +128,6 @@ exports.checkoutSession = catchAsyncError(async (req, res, next) => {
       new AppError(`There is no such cart with this user 404`)
     );
   }
-    // console.log(process.env.STRIPE_KEY);
   // 2) Get order price depend on cart price "Check if coupon apply"
   const cartPrice = cart.totalPriceAfterDiscount
     ? cart.totalPriceAfterDiscount
@@ -138,6 +136,7 @@ exports.checkoutSession = catchAsyncError(async (req, res, next) => {
   const totalOrderPrice = cartPrice + taxPrice + shippingPrice;
 
   // 3) Create stripe checkout session
+  const stripe=Stripe(process.env.STRIPE_KEY)
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: [{
@@ -157,9 +156,7 @@ exports.checkoutSession = catchAsyncError(async (req, res, next) => {
     client_reference_id: cart._id.toString(),
     metadata: req.body.shippingAddress,
   });
-  
-  res.status(200).json({ status: 'success', session });
-  
+ 
   // 4) send session to response
   res.status(200).json({ status: 'success', session });
 });
