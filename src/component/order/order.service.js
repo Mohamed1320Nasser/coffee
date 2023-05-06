@@ -18,7 +18,6 @@ exports.createCashOrder = catchAsyncError(async (req, res, next) => {
 
   // 1) Get cart depend on cartId
   const cart = await cartModel.findOne({user: req.user._id });
-  console.log(cart);
   if (!cart) {
     return next(
       new AppError(`There is no such cart with this user`, 404)
@@ -49,7 +48,7 @@ exports.createCashOrder = catchAsyncError(async (req, res, next) => {
     await productModel.bulkWrite(bulkOption, {});
 
     // 5) Clear cart depend on cartId
-    await Cart.findOneAndDelete({user: req.user._id });
+    await cartModel.findOneAndDelete({user: req.user._id });
   }
 
   res.status(201).json({ status: "success", data: order });
@@ -123,7 +122,7 @@ exports.checkoutSession = catchAsyncError(async (req, res, next) => {
   const shippingPrice = 0;
 
   // 1) Get cart depend on cartId
-  const cart = await Cart.findOne({user: req.user._id });
+  const cart = await cartModel.findOne({user: req.user._id });
   if (!cart) {
     return next(
       new AppError(`There is no such cart with this user 404`)
@@ -180,7 +179,6 @@ const createCardOrder = async (session) => {
     paidAt: Date.now(),
     paymentMethodType: 'card',
   });
-  console.log("One",order );
   // 4) After creating order, decrement product quantity, increment product sold
   if (order) {
     const bulkOption = cart.cartItems.map((item) => ({
@@ -189,12 +187,12 @@ const createCardOrder = async (session) => {
         update: { $inc: { quantity: -item.quantity, sold: +item.quantity } },
       },
     }));
-    await Product.bulkWrite(bulkOption, {});
+    await productModel.bulkWrite(bulkOption, {});
 
     // 5) Clear cart depend on cartId
-    await Cart.findByIdAndDelete(cartId);
+    await cartModel.findByIdAndDelete(cartId);
   }
-  console.log("Two",order);
+  // console.log("Two",order);
 };
 
 // @desc    This webhook will run when stripe payment success paid
