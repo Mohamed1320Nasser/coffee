@@ -14,23 +14,22 @@ const {
 
 const router = express.Router();
 
-router.use(protectedRoutes);
-
-
-router.route("/").post(allowedTo("user"), createCashOrder);
+router.route("/").post(protectedRoutes,allowedTo("user"), createCashOrder);
 router.get(
   "/checkout-session",
+  protectedRoutes,
   allowedTo('user'),
   checkoutSession
 );
 router.get(
   "/",
+  protectedRoutes,
   allowedTo("user", "admin"),
   filterOrderForLoggedUser,
   findAllOrders
 );
 router.post('/webhook', express.raw({type: 'application/json'}), webhookCheckout);
 router.get("/:id", findSpecificOrder);
-router.put("/:id/pay", allowedTo("admin"), updateOrderToPaid);
-router.put("/:id/deliver", allowedTo("admin"), updateOrderToDelivered);
+router.put("/:id/pay",protectedRoutes, allowedTo("admin"), updateOrderToPaid);
+router.put("/:id/deliver",protectedRoutes, allowedTo("admin"), updateOrderToDelivered);
 module.exports = router;
