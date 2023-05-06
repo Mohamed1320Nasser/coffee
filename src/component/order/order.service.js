@@ -17,7 +17,7 @@ exports.createCashOrder = catchAsyncError(async (req, res, next) => {
   const shippingPrice = 0;
 
   // 1) Get cart depend on cartId
-  const cart = await Cart.findOne({user: req.user._id });
+  const cart = await cartModel.findOne({user: req.user._id });
   console.log(cart);
   if (!cart) {
     return next(
@@ -191,8 +191,10 @@ const createCardOrder = async (session) => {
     }));
     await Product.bulkWrite(bulkOption, {});
 
+
     // 5) Clear cart depend on cartId
     await Cart.findByIdAndDelete(cartId);
+    return order
   }
 };
 
@@ -217,6 +219,6 @@ exports.webhookCheckout = catchAsyncError(async (req, res, next) => {
   if (event.type === 'checkout.session.completed') {
     //  Create order
     createCardOrder(event.data.object);
-    res.status(200).json({ received: true });
+    res.status(200).json({ received: true ,order:createCardOrder(event.data.object)});
   }else return res.status(200).json({ received: false ,message:"rejected order"});
 });
