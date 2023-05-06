@@ -7,6 +7,7 @@ const AppError = require("../../utils/AppError");
 const userModel = require("../users/user.model");
 const cartModel = require("../cart/cart.model");
 const Stripe = require('stripe');
+
 // @desc    create cash order
 // @route   POST /api/v1/orders/cartId
 // @access  Protected/User
@@ -199,6 +200,7 @@ const createCardOrder = async (session) => {
 // @route   POST /webhook-checkout
 // @access  Protected/User
 exports.webhookCheckout = catchAsyncError(async (req, res, next) => {
+  const stripe=Stripe(process.env.STRIPE_KEY)
   const sig = req.headers['stripe-signature'];
 
   let event;

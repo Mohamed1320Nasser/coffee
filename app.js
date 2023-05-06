@@ -9,12 +9,19 @@ const express = require("express");
 // express app
 const app = express();
 
-//webhook
-app.post('/webhook', express.raw({ type: 'application/json' }, webhookCheckout));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// cors
 const cors = require("cors");
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use((req,res,next)=>{
+  if(req.originalUrl=="/api/v1/orders/webhook"){
+   
+    next();
+  } else{
+    bodyParser.json()(req,res,next);
+  }
+})
+
 
 // module dotenv to save the improtant data
 require("dotenv").config({ path: "./config/.env" });

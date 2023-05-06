@@ -14,7 +14,7 @@ const {
 
 const router = express.Router();
 
-router.use(protectedRoutes);
+// router.use(protectedRoutes);
 
 
 router.route("/").post(allowedTo("user"), createCashOrder);
@@ -29,9 +29,8 @@ router.get(
   filterOrderForLoggedUser,
   findAllOrders
 );
-
+router.post('/webhook', express.raw({type: 'application/json'}), webhookCheckout);
 router.get("/:id", findSpecificOrder);
-
 router.put("/:id/pay", allowedTo("admin"), updateOrderToPaid);
 router.put("/:id/deliver", allowedTo("admin"), updateOrderToDelivered);
 module.exports = router;
