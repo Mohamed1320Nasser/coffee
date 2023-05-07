@@ -43,10 +43,11 @@ exports.getAll = (Model) =>
       .fields();
     let pages = await Model.collection.count() / apiFeatures.limit
     pages = Math.ceil(pages)
-    const Product = await apiFeatures.mongooseQuery
-    !Product && next(new AppError("Product not found", 404));
-    Product &&
-      res.status(200).json({ page: apiFeatures.page, pages, result: Product });
+    const numDocument = await Model.countDocuments()
+    const Document = await apiFeatures.mongooseQuery
+    !Document && next(new AppError("Document not found", 404));
+    Document &&
+      res.status(200).json({ page: apiFeatures.page, pages,numDocument, result: Document });
   });
 
 exports.getOne = (Model, populationOpt) =>
