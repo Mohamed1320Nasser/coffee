@@ -41,9 +41,9 @@ exports.getAll = (Model) =>
       .sort()
       .search()
       .fields();
-    let pages = await Model.collection.count() / apiFeatures.limit
+      const numDocument = await Model.collection.count()
+    let pages = numDocument / apiFeatures.limit
     pages = Math.ceil(pages)
-    const numDocument = await Model.countDocuments()
     const Document = await apiFeatures.mongooseQuery
     !Document && next(new AppError("Document not found", 404));
     Document &&
