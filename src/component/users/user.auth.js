@@ -42,7 +42,7 @@ module.exports.Signin = catchAsyncError(async (req, res, next) => {
     { userId: User._id, name: User.name },
     process.env.secrit_key
   );
-  res.status(200).json({ token });
+  res.status(200).json({ token ,role:User.role });
 });
 exports.Signout = catchAsyncError(async (req, res, next) => {
   res.clearCookie("token");
