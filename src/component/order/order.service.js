@@ -1,6 +1,5 @@
 const factory = require("../Handlers/handler.factory");
 const productModel = require("../product/product.model");
-const Cart = require("../cart/cart.model");
 const Order = require("./order.model");
 const { catchAsyncError } = require("../../utils/catchAsyncErr");
 const AppError = require("../../utils/AppError");
@@ -61,7 +60,14 @@ exports.filterOrderForLoggedUser = catchAsyncError(async (req, res, next) => {
 // @desc    Get all orders
 // @route   POST /api/v1/orders
 // @access  Protected/User-Admin-Manager
-exports.findAllOrders = factory.getAll(Order);
+
+// exports.findAllOrders = factory.getAll(Order);
+
+exports.findAllOrders=  catchAsyncError(async (req, res, next) => {
+  const orders= await Order.find().sort({ createdAt: -1 })
+
+  res.status(200).json({orders})
+})
 
 // @desc    Get all orders
 // @route   POST /api/v1/orders
@@ -158,7 +164,7 @@ exports.checkoutSession = catchAsyncError(async (req, res, next) => {
   });
  
   // 4) send session to response
-  res.status(200).json({ status: 'success', session });
+  res.status(200).json({ status: 'success', session ,URl:session.url});
 });
 
 const createCardOrder = async (session) => {
@@ -192,7 +198,7 @@ const createCardOrder = async (session) => {
     // 5) Clear cart depend on cartId
     await cartModel.findByIdAndDelete(cartId);
   }
-  // console.log("Two",order);
+  console.log("Two",order);
 };
 
 // @desc    This webhook will run when stripe payment success paid

@@ -52,18 +52,17 @@ const schema = Schema(
   },
   { timestamps: true }
 );
+schema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'user',
+    select: 'name image email phone',
+  }).populate({
+    path: 'cartItems.product',
+    select: 'name image ',
+  });
 
-// schema.pre(/^find/, function (next) {
-//   this.populate({
-//     path: 'user',
-//     select: 'name image email phone',
-//   }).populate({
-//     path: 'cartItems.product',
-//     select: 'title image ',
-//   });
-
-//   next();
-// });
+  next();
+});
 
 module.exports = model("Order", schema);
 

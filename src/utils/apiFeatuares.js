@@ -6,7 +6,7 @@ class ApiFeatures {
   paginat() {
     let page = this.querySting.page * 1 || 1;
     if (page < 1) page = 1;
-    let limit = 6;
+    let limit = 9;
     let skip = (page - 1) * limit;
     this.mongooseQuery.skip(skip).limit(limit);
     this.page = page;
@@ -29,7 +29,6 @@ class ApiFeatures {
     this.mongooseQuery.find(queryString);
     return this;
   }
-
   sort() {
     if (this.querySting.sort) {
       let sorted = this.querySting.sort.split(",").join(" ");
