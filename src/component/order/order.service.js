@@ -164,7 +164,7 @@ exports.checkoutSession = catchAsyncError(async (req, res, next) => {
   });
  
   // 4) send session to response
-  res.status(200).json({ status: 'success', session ,URl:session.url});
+  res.status(200).json({ status: 'success', session ,url:session.url});
 });
 
 const createCardOrder = async (session) => {
@@ -198,7 +198,6 @@ const createCardOrder = async (session) => {
     // 5) Clear cart depend on cartId
     await cartModel.findByIdAndDelete(cartId);
   }
-  console.log("Two",order);
 };
 
 // @desc    This webhook will run when stripe payment success paid

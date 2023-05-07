@@ -15,7 +15,7 @@ const {
 const router = express.Router();
 
 router.route("/").post(protectedRoutes,allowedTo("user"), createCashOrder);
-router.get(
+router.post(
   "/checkout-session",
   protectedRoutes,
   allowedTo('user'),
