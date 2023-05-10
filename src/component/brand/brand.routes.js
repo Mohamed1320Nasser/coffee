@@ -33,5 +33,5 @@ router
     updBrand
   )
   .delete(protectedRoutes, allowedTo("admin"), delBrand);
-
+  
 module.exports = router;

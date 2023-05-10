@@ -57,6 +57,7 @@ exports.filterOrderForLoggedUser = catchAsyncError(async (req, res, next) => {
   if (req.user.role === "user") req.filterObj = { user: req.user._id };
   next();
 });
+
 // @desc    Get all orders
 // @route   POST /api/v1/orders
 // @access  Protected/User-Admin-Manager

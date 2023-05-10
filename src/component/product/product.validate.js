@@ -1,4 +1,6 @@
 const joi = require("joi");
+const joiImageExtension = require('joi-image-extension');
+Joi.extend(joiImageExtension);
 exports.productValidation = {
   body: joi
     .object()
@@ -41,4 +43,9 @@ exports.productValidation = {
         "any.empty": "empty product machien is not acceptable",
       }),
     }),
+  image: joi
+    .image()
+    .minDimensions(640, 480)
+    .maxFileSize(2 * 1024 * 1024)
+    .required()
 };
