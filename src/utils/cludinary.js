@@ -12,6 +12,7 @@ exports.cloudinary = cloudinary;
 exports.uploadToCloudinary = async (file, fieldName) => {
 
      try{
+      // if(!file) throw new AppError("pleat upload image ", 401);
     if (file.size > 2100000) {
       throw new AppError("File size should be less than 2Mb", 401);
     }
