@@ -1,4 +1,4 @@
-const { uploadSingleImage } = require("../../utils/uploadFile");
+const { uploadSingleImage, checkImageUpload } = require("../../utils/uploadFile");
 const {
   getBrands,
   creatBrand,
@@ -19,6 +19,7 @@ router
     protectedRoutes,
     allowedTo("admin"),
     uploadSingleImage("image", "brand"),
+    checkImageUpload,
     validation(brandValidation),
     creatBrand
   )

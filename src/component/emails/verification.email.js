@@ -5,16 +5,15 @@ const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
     service: 'gmail',
        auth: {
-         user: "youthwelfare.thebes@gmail.com", // generated ethereal user
-         pass: "fxfrirmjzvqmthfu", // generated ethereal password
+         user: process.env.EMAIL, // generated ethereal user
+         pass: process.env.EMAIL_PASSWORD, // generated ethereal password
        },
      });
-
 exports.sendEmail = async (user, host) => {
   // send mail with defined transport object
   await transporter.sendMail(
     {
-      from: '" Coffee Shop " <youthwelfare.thebes@gmail.com>', // sender address
+      from: `" Coffee Shop " <${process.env.EMAIL}>`, // sender address
       to: user.email,
       subject: `Hello ${user.name}`, // Subject line,
       text: "Hello dear",
@@ -42,7 +41,7 @@ exports.sendEmail = async (user, host) => {
                   <tr>
                     <td style="padding: 0 62px 10px ;">
                       <a href="https://thebes.edu.eg/">
-                        <img style=" border: 0;" src="https://res.cloudinary.com/dw0cormzj/image/upload/v1678122784/emails/logo_ue7cyp.jpg" width="180" title="Logo" />
+                        <img style=" border: 0;" src="https://res.cloudinary.com/dufrfkj11/image/upload/v1683740686/Coffee/undefined/logo_2023-05-10_20-43-57_appssx.jpg" width="180" title="Logo" />
                       </a>
                     </td>
                   </tr>
@@ -55,7 +54,7 @@ exports.sendEmail = async (user, host) => {
       <tr>
         <td style="padding: 0;">
           <a href="#">
-            <img style=" border: 0;" src="https://res.cloudinary.com/dw0cormzj/image/upload/v1678122780/emails/image_peunhl.jpg" width="600" style="max-width: 100%" />
+            <img style=" border: 0;" src="https://res.cloudinary.com/dufrfkj11/image/upload/v1681511347/Coffee/category/bbyteitfsonfqrz2spth.png" width="600" style="max-width: 100%" />
           </a>
         </td>
       </tr>

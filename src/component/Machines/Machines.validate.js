@@ -13,7 +13,7 @@ exports.MachineValidation = {
           "any.required": "Machine name field is required",
           "any.empty": "empty Machine  name is not acceptable",
         }),
-        type: joi
+      type: joi
         .string()
         .required()
         .min(3)
@@ -22,7 +22,7 @@ exports.MachineValidation = {
           "any.required": "Machine name field is required",
           "any.empty": "empty Machine  name is not acceptable",
         }),
-        description: joi
+      description: joi
         .string()
         .required()
         .min(3)
@@ -31,7 +31,7 @@ exports.MachineValidation = {
           "any.required": "Machine description field is required",
           "any.empty": "empty Machine  description is not acceptable",
         }),
-        pros: joi
+      pros: joi
         .string()
         .required()
         .min(3)
@@ -40,7 +40,7 @@ exports.MachineValidation = {
           "any.required": "Machine pros field is required",
           "any.empty": "empty Machine  pros is not acceptable",
         }),
-        cons: joi
+      cons: joi
         .string()
         .required()
         .min(3)
@@ -50,4 +50,10 @@ exports.MachineValidation = {
           "any.empty": "empty Machine  cons is not acceptable",
         }),
     }),
+  image: joi.binary().max(5000000).required()
+    .messages({
+      "any.required": "Machine image field is required",
+      "any.empty": "empty Machine image is not acceptable",
+      "binary.max": "Machine image size must be less than 5 MB"
+    })
 };

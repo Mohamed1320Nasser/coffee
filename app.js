@@ -2,10 +2,7 @@ process.on("uncaughtException", (err) => {
   console.log("uncaughtException", err.stack);
 });
 const bodyParser = require("body-parser");
-const { webhookCheckout } = require("./src/component/order/order.service");
 const express = require("express");
-
-
 // express app
 const app = express();
 

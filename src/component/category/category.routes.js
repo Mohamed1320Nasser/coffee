@@ -5,7 +5,7 @@ const {
   updCategory,
   deleleCategory,
 } = require("./category.services");
-const { uploadSingleImage } = require("../../utils/uploadFile");
+const { uploadSingleImage, checkImageUpload } = require("../../utils/uploadFile");
 const { protectedRoutes, allowedTo } = require("../users/user.auth");
 const products = require("../product/product.api");
 const { validation } = require("../../utils/validation");
@@ -18,6 +18,7 @@ router
     protectedRoutes,
     allowedTo("admin"),
     uploadSingleImage("image", "category"),
+    checkImageUpload,
     validation(validators.category),
     creatCategory
   )

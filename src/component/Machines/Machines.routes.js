@@ -1,4 +1,4 @@
-const { uploadSingleImage } = require("../../utils/uploadFile");
+const { uploadSingleImage, checkImageUpload } = require("../../utils/uploadFile");
 const {
   creatMachines,
   getAllMachines,
@@ -19,6 +19,7 @@ router
     protectedRoutes,
     allowedTo("admin"),
     uploadSingleImage("image", "machines"),
+    checkImageUpload,
     validation(MachineValidation),
     creatMachines
   )
