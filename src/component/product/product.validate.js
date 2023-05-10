@@ -1,6 +1,7 @@
 const joi = require("joi");
-const joiImageExtension = require('joi-image-extension');
-Joi.extend(joiImageExtension);
+// @ts-ignore
+// const joiImageExtension = require('joi-image-extension');
+// joi.extend(joiImageExtension);
 exports.productValidation = {
   body: joi
     .object()
@@ -43,15 +44,15 @@ exports.productValidation = {
         "any.empty": "empty product machien is not acceptable",
       }),
     }),
-  image: joi
-    .image()
-    .required().messages({
-      "any.required": "product image field is required ",
-      "any.empty": "empty product image is not acceptable",
-      "image.base": "product image must be a valid image file",
-      "image.minDimensions": "product image must have minimum dimensions of 640x480",
-      "image.maxDimensions": "product image must have maximum dimensions of 1920x1080",
-      "image.minFileSize": "product image must have a minimum size of 50KB",
-      "image.maxFileSize": "product image must have a maximum size of 5MB",
-    }),
+  // image: joi
+  //   .image()
+  //   .required().messages({
+  //     "any.required": "product image field is required ",
+  //     "any.empty": "empty product image is not acceptable",
+  //     "image.base": "product image must be a valid image file",
+  //     "image.minDimensions": "product image must have minimum dimensions of 640x480",
+  //     "image.maxDimensions": "product image must have maximum dimensions of 1920x1080",
+  //     "image.minFileSize": "product image must have a minimum size of 50KB",
+  //     "image.maxFileSize": "product image must have a maximum size of 5MB",
+  //   }),
 };
