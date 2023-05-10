@@ -17,8 +17,8 @@ router
     protectedRoutes,
     allowedTo("admin"),
     uploadSingleImage("image", "product"),
-    // checkImageUpload,
-    // validation(productValidation),
+    checkImageUpload,
+    validation(productValidation),
     creatProduct
   )
   .get(getProducts);
