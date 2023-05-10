@@ -45,7 +45,13 @@ exports.productValidation = {
     }),
   image: joi
     .image()
-    .minDimensions(640, 480)
-    .maxFileSize(2 * 1024 * 1024)
-    .required()
+    .required().messages({
+      "any.required": "product image field is required",
+      "any.empty": "empty product image is not acceptable",
+      "image.base": "product image must be a valid image file",
+      "image.minDimensions": "product image must have minimum dimensions of 640x480",
+      "image.maxDimensions": "product image must have maximum dimensions of 1920x1080",
+      "image.minFileSize": "product image must have a minimum size of 50KB",
+      "image.maxFileSize": "product image must have a maximum size of 5MB",
+    }),
 };
