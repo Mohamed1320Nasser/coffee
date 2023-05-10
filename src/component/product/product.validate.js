@@ -46,7 +46,7 @@ exports.productValidation = {
   image: joi
     .image()
     .required().messages({
-      "any.required": "product image field is required",
+      "any.required": "product image field is required ",
       "any.empty": "empty product image is not acceptable",
       "image.base": "product image must be a valid image file",
       "image.minDimensions": "product image must have minimum dimensions of 640x480",
