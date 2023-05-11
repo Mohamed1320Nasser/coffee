@@ -28,8 +28,7 @@ module.exports.ChangePass = catchAsyncError(async (req, res,next) => {
   const { oldPassword, newPassword } = req.body;
   let match = await bcrypt.compare(oldPassword, req.user.password);
   if (match) {
-    let hash = await bcrypt.hash(newPassword, Number(process.env.saltRounds));
-    await UserModel.findByIdAndUpdate(req.user._id, { password: hash });
+    await UserModel.findByIdAndUpdate(req.user._id, { password: newPassword });
     res.status(200).json({ message: " change password is succes" });
   } else {
    return next(new AppError("Old password is incorrect",401))
