@@ -44,7 +44,7 @@ exports.loginSchema = { body: joi
         "any.required": " old Password field is required",
         "any.empty": "empty  old Password is not acceptable",
       }),
-      newPassword: joi.string().required().regex(RegExp("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$")).messages({
+      newPassword: joi.string().required().regex(RegExp(RegExp(/^(?=.*[a-zA-Z])(?=.*\d).{8,}$/))).messages({
         "any.required": "user new Password field is required",
         "any.empty": "empty user new Password is not acceptable",
       }),
