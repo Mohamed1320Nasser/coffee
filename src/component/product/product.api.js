@@ -3,7 +3,7 @@ const { validation } = require("../../utils/validation");
 const { productValidation } = require("./product.validate");
 const { protectedRoutes, allowedTo } = require("../users/user.auth");
 const {
-  creatProduct,
+  creatProduct ,
   getProducts,
   getProduct,
   updProduct,
