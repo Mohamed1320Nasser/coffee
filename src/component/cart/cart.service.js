@@ -48,7 +48,6 @@ exports.addProductToCart = catchAsyncError(async (req, res, next) => {
 
 //remov product from cart
 exports.removeProductFromeCart = catchAsyncError(async (req, res, next) => {
-  // res.json({item:req.body.item,token:req.headers.token})
   const Cart = await CartModel.findOneAndUpdate(
     { user: req.user._id },
     { $pull: { cartItems: { _id: req.params.productId } } },
@@ -60,9 +59,10 @@ exports.removeProductFromeCart = catchAsyncError(async (req, res, next) => {
   Cart && res.status(200).json({Cart,token:req.headers.token});
 
 });
+
+
 // update quantity of cart
 exports.updateQuantity = catchAsyncError(async (req, res, next) => {
-  console.log("text 2");
   let Cart = await CartModel.findOne({ user: req.user._id });
 
   let findProduct = Cart.cartItems.find(

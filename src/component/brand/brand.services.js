@@ -5,6 +5,7 @@ const facrory = require("../Handlers/handler.factory");
 
 // to add a new Brand
 module.exports.creatBrand = facrory.createOne(BrandModel,"brand");
+
 // to get all Brands
 module.exports.getBrands = facrory.getAll(BrandModel);
 

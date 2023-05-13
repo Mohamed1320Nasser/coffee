@@ -7,6 +7,8 @@ const {
   deleteFromCloudinary,
 } = require("../../utils/cludinary");
 
+
+// end point to craete any decument 
 exports.createOne = (Model, fieldName) => {
   return catchAsyncError(async (req, res, next) => {
     const result = await uploadToCloudinary(req.file, fieldName);
@@ -18,6 +20,8 @@ exports.createOne = (Model, fieldName) => {
     res.status(200).json(document);
   });
 };
+
+// end point to delete any decument 
 exports.deleteOn = (Model) => {
   return catchAsyncError(async (req, res, next) => {
     const { id } = req.params;
@@ -29,6 +33,7 @@ exports.deleteOn = (Model) => {
   });
 };
 
+// end point to get any decument  with pagination filter sort search and fielde
 exports.getAll = (Model) =>
   catchAsyncError(async (req, res, next) => {
     let filter = {};
@@ -50,6 +55,7 @@ exports.getAll = (Model) =>
       res.status(200).json({ page: apiFeatures.page, pages,numDocument, result: Document });
   });
 
+  // get spcific document be his id 
 exports.getOne = (Model, populationOpt) =>
   catchAsyncError(async (req, res, next) => {
     const { id } = req.params;
@@ -66,6 +72,8 @@ exports.getOne = (Model, populationOpt) =>
     res.status(200).json({ data: document });
   });
 
+
+  //update any document 
 exports.updateOne = (Model, fieldName) =>
   catchAsyncError(async (req, res, next) => {
     if (req.body.name) {

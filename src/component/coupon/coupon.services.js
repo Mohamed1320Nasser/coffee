@@ -9,20 +9,20 @@ module.exports.creatCoupn = catchAsyncError(async (req, res, next) => {
   await Coupn.save();
   res.status(200).json(Coupn);
 });
+
 // to get all Coupns
 module.exports.getCoupns = facrory.getAll(CoupnModel);
 
 // to get specific Coupn
 module.exports.getCoupn = facrory.getOne(CoupnModel);
+
 // to delete an Coupn
 module.exports.delCoupn = facrory.deleteOn(CoupnModel);
-// to update Coupnname
 
+// to update Coupnname
 module.exports.updCoupn = catchAsyncError(async (req, res, next) => {
   const { id } = req.params;
   const isCoupn = await CoupnModel.findById(id);
-  console.log(isCoupn);
-  console.log(req.user);
   if (isCoupn.user._id.toString() === req.user._id.toString()) {
     const Coupn = await CoupnModel.findByIdAndUpdate(id, req.body, {
       new: true,

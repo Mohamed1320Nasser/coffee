@@ -52,7 +52,7 @@ exports.Signout = catchAsyncError(async (req, res, next) => {
   res.status(200).json({ message: "logged out", status: true });
 });
 
-//authentication 
+//authentication determined if user make login or not
 exports.protectedRoutes = catchAsyncError(async (req, res, next) => {
   const { token } = req.headers;
   if (!token) return next(new AppError("token inprovided", 401));
@@ -68,6 +68,7 @@ exports.protectedRoutes = catchAsyncError(async (req, res, next) => {
 
   next();
 });
+
 //authrization {detrmind if user or admin}
 exports.allowedTo = (...roles) => {
   return catchAsyncError(async (req, res, next) => {

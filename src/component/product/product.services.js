@@ -1,9 +1,6 @@
 const ProductModel = require("./product.model");
-var slugify = require("slugify");
-const { catchAsyncError } = require("../../utils/catchAsyncErr");
-const AppError = require("../../utils/AppError");
 const facrory = require("../Handlers/handler.factory");
-const ApiFeatures = require("../../utils/apiFeatuares");
+
 
 // to add a new Product
 module.exports.creatProduct = facrory.createOne(ProductModel,"product");
