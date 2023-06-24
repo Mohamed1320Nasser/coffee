@@ -1,7 +1,4 @@
 const joi = require("joi");
-// @ts-ignore
-// const joiImageExtension = require('joi-image-extension');
-// joi.extend(joiImageExtension);
 exports.productValidation = {
   body: joi
     .object()

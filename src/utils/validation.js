@@ -1,6 +1,5 @@
 const dataMethod = ['body', 'params', 'query', 'headers']
 
-
 exports.validation = (Schema) => {
     return (req, res, next) => {
         try {
@@ -13,16 +12,13 @@ exports.validation = (Schema) => {
                     }
                 }
             })
-
             if (validationArr.length) {
                 return res.status(400).json({ message: "Validation error", validationArr })
             } else {
                 return next()
             }
-
         } catch (error) {
             return next(new Error("validation err", 500 ))
         }
     }
-
 }
